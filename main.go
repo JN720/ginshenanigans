@@ -47,6 +47,7 @@ func main() {
 	app.GET("/", func(c *gin.Context) { get(c, db) })
 	app.GET("/:id", func(c *gin.Context) { getUser(c, db) })
 	app.POST("/", func(c *gin.Context) { postUser(c, db) })
+	app.DELETE("/:id", func(c *gin.Context) { deleteUser(c, db) })
 	app.Run("localhost:8000")
 }
 
@@ -82,4 +83,14 @@ func postUser(c *gin.Context, db *sql.DB) {
 		return
 	}
 	c.Status(http.StatusCreated)
+}
+
+func deleteUser(c *gin.Context, db *sql.DB) {
+	id, _ := c.Params.Get("id")
+	_, err := db.Query("DELETE FROM Users WHERE id = " + id + ";")
+	if err != nil {
+		c.Status(http.StatusNotFound)
+		return
+	}
+	c.Status(http.StatusOK)
 }
