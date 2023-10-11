@@ -1,0 +1,1 @@
+This repository is a practice CRUD API for the planned Ecommerce Simulator project utilizing Go in the backend.
